@@ -1,0 +1,15 @@
+Task - interrupt to switch mode to analog in/out or midi in/out
+
+Current notes interface - turn on/off active notes.
+Get chord from current notes.
+
+Read from midi inputs and turn on current notes/
+
+Read from analog inputs, fft, and turn on current notes/
+	At every sample, scan through different frequencies.
+
+Task to update chord representation on LED board.
+
+Questions Reiss Will Ask:
+what if you get two notes at the same time.
+Audio board flicker on audio processing
