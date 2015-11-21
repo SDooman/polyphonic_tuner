@@ -1,8 +1,12 @@
+#include <LiquidCrystal.h>
+LiquidCrystal lcd(2, 4, 5, 6, 7, 8);
+
+
 const int MIDI_NOTES = 127;
 boolean notes[MIDI_NOTES];
 byte noteOn = 144;
 byte noteOff = 128;
-
+boolean success = false;
 
 void setup() {
   for(int i = 0; i < MIDI_NOTES; i++) {
@@ -51,7 +55,9 @@ void readNoteOn() {
   byte note = Serial.read();
   byte velocity = Serial.read();
   setNote(note, true);
-  
+
+  success = true;
+   
   rm = STREAM;
 }
 
@@ -71,5 +77,11 @@ void readNoteOff() {
 
 void loop() {
   readMIDI();
+
+  if (success) {
+    lcd.print("SUCCESS");
+  } else {
+    lcd.print("FAILURE");
+  }
 
 }

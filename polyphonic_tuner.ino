@@ -1,14 +1,14 @@
 #include <LiquidCrystal.h>
 LiquidCrystal lcd(2, 4, 5, 6, 7, 8);
 
-typedef enum Q {
+typedef enum {
   MAJOR,
   MINOR,
   AUGMENTED,
   DIMINISHED
 } Quality;
 
-typedef struct Chord {
+struct {
   byte root;
   Quality quality;
 } Chord;
@@ -26,6 +26,8 @@ void printQuality(Quality q) {
       break;
     case DIMINISHED:
       lcd.print("Dim");
+      break;
+    default:
       break;
   }
 }
@@ -68,11 +70,13 @@ void printRoot(byte root) {
     case 11:
       lcd.print("B");      
       break;
+    default:
+      break;
   }
 }
 
 
-void printChord(Chord* c) {
+void printChord(struct Chord* c) {
   lcd.setCursor(0, 1);
   printRoot(c->root);
   printQuality(c->quality);
@@ -84,5 +88,5 @@ void setup() {
 
 void loop() {
   Chord c = {root: 0, quality: MAJOR};
-//  printChord(&c);
+  printChord(&c);
 }
