@@ -1,30 +1,23 @@
 #include <LiquidCrystal.h>
 LiquidCrystal lcd(2, 4, 5, 6, 7, 8);
 
-typedef enum {
-  MAJOR,
-  MINOR,
-  AUGMENTED,
-  DIMINISHED
-} Quality;
-
 typedef struct Chord {
-  byte root;
-  Quality quality;
+  int root;
+  int quality;
 } Chord;
 
-void printQuality(Quality q) {
+void printQuality(int q) {
   switch (q) {
-    case MAJOR:
+    case 0:
       lcd.print("M");
       break;
-    case MINOR:
+    case 1:
       lcd.print("m");
       break;
-    case AUGMENTED:
+    case 2:
       lcd.print("Aug");
       break;
-    case DIMINISHED:
+    case 3:
       lcd.print("Dim");
       break;
     default:
@@ -32,7 +25,7 @@ void printQuality(Quality q) {
   }
 }
 
-void printRoot(byte root) {
+void printRoot(int root) {
   switch (root) {
     case 0:
       lcd.print("C");
@@ -88,7 +81,7 @@ void setup() {
 
 void loop() {
   Chord c;
-  c.root = 0;
-  c.quality = MAJOR;
+  c.root = 10;
+  c.quality = 1;
   printChord(&c);
 }
