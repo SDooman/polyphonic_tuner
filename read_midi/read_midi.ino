@@ -6,9 +6,13 @@ const int MIDI_NOTES = 127;
 boolean notes[MIDI_NOTES];
 byte noteOn = 144;
 byte noteOff = 128;
-boolean success = false;
+byte currentNote = 0;
+
+int noteOns = 0;
+
 
 void setup() {
+  Serial.begin(31250);
   for(int i = 0; i < MIDI_NOTES; i++) {
     notes[i] = false;
   }
@@ -42,7 +46,9 @@ void readStream() {
 void readMIDI() {
   switch(rm) {
     case STREAM: return readStream();
-    case NOTE_ON: return readNoteOn();
+    case NOTE_ON: 
+      noteOns++;
+      return readNoteOn();
     case NOTE_OFF: return readNoteOff();
   }
 }
@@ -55,8 +61,6 @@ void readNoteOn() {
   byte note = Serial.read();
   byte velocity = Serial.read();
   setNote(note, true);
-
-  success = true;
    
   rm = STREAM;
 }
@@ -74,14 +78,8 @@ void readNoteOff() {
 }
 
 
-
 void loop() {
-  readMIDI();
-
-  if (success) {
-    lcd.print("SUCCESS");
-  } else {
-    lcd.print("FAILURE");
-  }
-
+  readMIDI(); 
+  lcd.setCursor(0, 1);
+  lcd.print(noteOns);
 }
