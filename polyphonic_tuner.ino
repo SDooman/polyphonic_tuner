@@ -8,7 +8,7 @@ typedef enum {
   DIMINISHED
 } Quality;
 
-struct {
+typedef struct Chord {
   byte root;
   Quality quality;
 } Chord;
@@ -87,6 +87,8 @@ void setup() {
 }
 
 void loop() {
-  Chord c = {root: 0, quality: MAJOR};
+  Chord c;
+  c.root = 0;
+  c.quality = MAJOR;
   printChord(&c);
 }
