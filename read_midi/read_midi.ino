@@ -1,7 +1,15 @@
+#include <MIDI.h>
+#include <midi_Defs.h>
+#include <midi_Message.h>
+#include <midi_Namespace.h>
+#include <midi_Settings.h>
+
 #include <LiquidCrystal.h>
 LiquidCrystal lcd(2, 4, 5, 6, 7, 8);
 #include <MIDI.h>
 MIDI_CREATE_DEFAULT_INSTANCE();
+
+String message = "";
 
 const int MIDI_NOTES = 127;
 boolean notes[MIDI_NOTES];
@@ -73,8 +81,13 @@ boolean isCommand(byte b) {
   return b > 127;
 }
 
+
+
 void loop() {
   MIDI.read();
   lcd.clear();
-  lcd.print(last_note);
+  //lcd.print(last_note);
+  array_to_chord();
+  lcd.print(message);
+  
 }
