@@ -10,6 +10,7 @@ LiquidCrystal lcd(2, 4, 5, 6, 7, 8);
 MIDI_CREATE_DEFAULT_INSTANCE();
 
 String message = "";
+boolean wasChanged = false;
 
 const int MIDI_NOTES = 127;
 boolean notes[MIDI_NOTES];
@@ -46,6 +47,7 @@ void setup() {
 
 void setNote(byte note, boolean status) {
   notes[note] = status;
+  wasChanged = true;
   if (status) {
     last_note = note;  
   }
@@ -85,9 +87,12 @@ boolean isCommand(byte b) {
 
 void loop() {
   MIDI.read();
-  lcd.clear();
-  //lcd.print(last_note);
-  array_to_chord();
-  lcd.print(message);
+  
+  if(wasChanged){
+    wasChanged = false;
+    array_to_chord();
+    lcd.clear();
+    lcd.print(message);
+  }
   
 }
