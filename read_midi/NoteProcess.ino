@@ -71,59 +71,72 @@ void array_to_chord(){
   
 }
 
-void detectChord(int chord){
+void detectChord(int notes){
   int root;
+  message.remove(0);
+  subMessage.remove(0);
+  
   for (root = 0; root < 12; root++){ // only 12 possible rotations
-    switch (chord) {
+    switch (notes) {
         
       case majMask:
         message = intToLetter[root];
         message += " Major";
+        makesChord = true;
         return;
       
       case minMask:
         message = intToLetter[root];
         message += " Minor";
+        makesChord = true;
         return;
 
       case augMask:
         message = intToLetter[root];
         message += " Aug";
+        makesChord = true;
         return;
 
       case dimMask:
         message = intToLetter[root];
         message += " Dim";
+        makesChord = true;
         return;
 
       case minMin7Mask:
         message = intToLetter[root];
         message += " Min Min 7";
+        makesChord = true;
         return;
 
       case halfDim7Mask:
         message = intToLetter[root];
         message += " Half Dim 7";
+        makesChord = true;
         return;
 
       case fullDim7Mask:
         message = intToLetter[root];
         message += " Full Dim 7";
+        makesChord = true;
         return;
 
       case majMin7Mask:
         message = intToLetter[root];
         message += " Maj Min 7";
+        makesChord = true;
         return;
         
       case majMaj7Mask:
         message = intToLetter[root];
         message += " Maj Maj 7";
+        makesChord = true;
         return;
 
       case minMaj7Mask:
         message = intToLetter[root];
         message += " Min Maj 7";
+        makesChord = true;
         return;
 
       /**************/
@@ -131,41 +144,49 @@ void detectChord(int chord){
       case majMaskpb2:
         message = intToLetter[root];
         message += " Major + b2";
+        makesChord = true;
         return;
       
       case minMaskpb2:
         message = intToLetter[root];
         message += " Minor + b2";
+        makesChord = true;
         return;
 
       case augMaskpb2:
         message = intToLetter[root];
         message += " Aug + b2";
+        makesChord = true;
         return;
 
       case dimMaskpb2:
         message = intToLetter[root];
         message += " Dim + b2";
+        makesChord = true;
         return;
 
       case minMin7Maskpb9:
         message = intToLetter[root];
         message += " Min Min 7 b9";
+        makesChord = true;
         return;
 
       case halfDim7Maskpb9:
         message = intToLetter[root];
         message += " Half Dim 7 b9";
+        makesChord = true;
         return;
 
       case fullDim7Maskpb9:
         message = intToLetter[root];
         message += " Full Dim 7 b9";
+        makesChord = true;
         return;
 
       case majMin7Maskpb9:
         message = intToLetter[root];
         message += " Maj Min 7 b9";
+        makesChord = true;
         return;
         
       case majMaj7Maskpb9:
@@ -176,6 +197,7 @@ void detectChord(int chord){
       case minMaj7Maskpb9:
         message = intToLetter[root];
         message += " Min Maj 7 b9";
+        makesChord = true;
         return;
 
       /************/
@@ -183,51 +205,61 @@ void detectChord(int chord){
       case majMaskp2:
         message = intToLetter[root];
         message += " Major + 2";
+        makesChord = true;
         return;
       
       case minMaskp2:
         message = intToLetter[root];
         message += " Minor + 2";
+        makesChord = true;
         return;
 
       case augMaskp2:
         message = intToLetter[root];
         message += " Aug + 2";
+        makesChord = true;
         return;
 
       case dimMaskp2:
         message = intToLetter[root];
         message += " Dim + 2";
+        makesChord = true;
         return;
 
       case minMin7Maskp9:
         message = intToLetter[root];
         message += " Min Min 7 + 9";
+        makesChord = true;
         return;
 
       case halfDim7Maskp9:
         message = intToLetter[root];
         message += " Half Dim 7 + 9";
+        makesChord = true;
         return;
 
       case fullDim7Maskp9:
         message = intToLetter[root];
         message += " Full Dim 7 +9";
+        makesChord = true;
         return;
 
       case majMin7Maskp9:
         message = intToLetter[root];
         message += " Maj Min 7 + 9";
+        makesChord = true;
         return;
         
       case majMaj7Maskp9:
         message = intToLetter[root];
         message += " Maj Maj 7 + 9";
+        makesChord = true;
         return;
 
       case minMaj7Maskp9:
         message = intToLetter[root];
         message += " Min Maj 7 + 9";
+        makesChord = true;
         return;
 
       /************/
@@ -235,33 +267,40 @@ void detectChord(int chord){
       case majMaskp4:
         message = intToLetter[root];
         message += " Major + 4";
+        makesChord = true;
         return;
       
       case minMaskp4:
         message = intToLetter[root];
         message += " Minor + 4";
+        makesChord = true;
         return;
 
       case augMaskp4:
         message = intToLetter[root];
         message += " Aug + 4";
+        makesChord = true;
         return;
 
       case dimMaskp4:
         message = intToLetter[root];
         message += " Dim + 4";
+        makesChord = true;
         return;
 
       case minMin7Maskp4:
         message = intToLetter[root];
         message += " Min Min 7 + 4";
+        makesChord = true;
         return;
-      /* AMBIGUITY CANT DO THIS
+
+      /*
       case halfDim7Mask:
         message = intToLetter[root];
         message += " Half Dim 7";
+        makesChord = true;
         return;
-
+        
       case fullDim7Mask:
         message = intToLetter[root];
         message += " Full Dim 7";
@@ -270,27 +309,57 @@ void detectChord(int chord){
       case majMin7Maskp4:
         message = intToLetter[root];
         message += " Maj Min 7 + 4";
+        makesChord = true;
         return;
         
       case majMaj7Maskp4:
         message = intToLetter[root];
         message += " Maj Maj 7 + 4";
+        makesChord = true;
         return;
 
       case minMaj7Maskp4:
         message = intToLetter[root];
         message += " Min Maj 7 + 4";
+        makesChord = true;
         return;
 
       default:                        // no masks matched
 
-        if (1 & chord){               // first bit is on, need to rotate it.
-          chord = (chord >> 1) | 2048;// turn on last bit
+        if (1 & notes){               // first bit is on, need to rotate it.
+          notes = (notes >> 1) | 2048;// turn on last bit
         } else {
-          chord = chord >> 1;         // otherwise just shift
+          notes = notes >> 1;         // otherwise just shift
         }
         break;
     }
   }
-  message = "";
+
+  //No triadic chord was found so print notes being played
+
+  makesChord = false;
+  message = "hey";
+  subMessage = "now";
+  
+  /*for(root = 0; root < 12; root++) {
+    //if current first bit is on, turn it on in message
+    if(1 & notes){
+      message += intToLetter[root];
+      if(root % 2) {
+        subMessage += "b";
+      } else {
+        subMessage += " ";
+      }
+    } else {
+      message += " ";
+      subMessage += " ";
+    }
+    
+    //Rotate to determine whether next note is being played
+    if (1 & notes){               // first bit is on, need to rotate it.
+      notes = (notes >> 1) | 2048;// turn on last bit
+    } else {
+      notes = notes >> 1;         // otherwise just shift
+    }
+  }*/
 }

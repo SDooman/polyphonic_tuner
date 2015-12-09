@@ -10,6 +10,9 @@ LiquidCrystal lcd(2, 4, 5, 6, 7, 8);
 MIDI_CREATE_DEFAULT_INSTANCE();
 
 String message = "";
+String subMessage = "";
+
+boolean makesChord = false; //For determining if chord is triad
 boolean wasChanged = false;
 
 const int MIDI_NOTES = 127;
@@ -43,6 +46,8 @@ void setup() {
   for(int i = 0; i < MIDI_NOTES; i++) {
     notes[i] = false;
   }
+
+  lcd.clear();
 }
 
 void setNote(byte note, boolean status) {
@@ -92,7 +97,14 @@ void loop() {
     wasChanged = false;
     array_to_chord();
     lcd.clear();
-    lcd.print(message);
+
+    if(makesChord) { 
+      lcd.print(message);
+    } else {
+      lcd.print(message);
+      lcd.setCursor(0,1);
+      lcd.print(subMessage);
+    }
   }
   
 }
