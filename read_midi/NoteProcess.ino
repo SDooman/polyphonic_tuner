@@ -1,4 +1,6 @@
 String intToLetter[12] = {"C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"};
+String intToLetterPrefix[12] = {"C", "C", "D", "D", "E", "F", "F", "G", "G", "A", "A", "B"};
+boolean intToLetterIsBlackKey[12] = {false, true, false, true, false, false, true, false, true, false, true, false};
 
 #define CBIT 145
 #define CsBIT 290
@@ -338,15 +340,13 @@ void detectChord(int notes){
   //No triadic chord was found so print notes being played
 
   makesChord = false;
-  message = "hey";
-  subMessage = "now";
   
-  /*for(root = 0; root < 12; root++) {
+  for(root = 0; root < 12; root++) {
     //if current first bit is on, turn it on in message
     if(1 & notes){
-      message += intToLetter[root];
-      if(root % 2) {
-        subMessage += "b";
+      message += intToLetterPrefix[root];
+      if(intToLetterIsBlackKey[root]) {
+        subMessage += "#";
       } else {
         subMessage += " ";
       }
@@ -361,5 +361,5 @@ void detectChord(int notes){
     } else {
       notes = notes >> 1;         // otherwise just shift
     }
-  }*/
+  }
 }

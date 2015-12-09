@@ -5,7 +5,7 @@
 #include <midi_Settings.h>
 
 #include <LiquidCrystal.h>
-LiquidCrystal lcd(2, 4, 5, 6, 7, 8);
+LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
 #include <MIDI.h>
 MIDI_CREATE_DEFAULT_INSTANCE();
 
@@ -47,6 +47,7 @@ void setup() {
     notes[i] = false;
   }
 
+  lcd.begin(16,2);
   lcd.clear();
 }
 
