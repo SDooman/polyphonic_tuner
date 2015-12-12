@@ -13,4 +13,15 @@ ear training.
 Architecture
 ============
 
+The basic system design of this device is outlined in 
+Tasks Diagram.png.  The device is constantly reading from the
+MIDI device, waiting for one of two kinds of MIDI commands:
+Note On or Note Off.  For either of those, a task is executed
+to update the internal representation of the currently played
+notes, and analyzes the current notes.  Then the display is 
+updated in an LCD update task.
+
+Implementation
+==============
+
 
