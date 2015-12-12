@@ -4,7 +4,7 @@ Polyphonic Tuner
 This is a device that can be connected to any MIDI instrument
 and will analyze the notes that this MIDI instrument will
 play.  If the MIDI device is playing a triadic chord, the tuner
-will identify the root/quality of the chord and display it.
+will identify the root and quality of the chord and display it.
 This device is designed for new musicians, particularly new 
 pianists or guitarists.  This device will enable musicians to 
 see exactly what they're playing and help develop their 
@@ -171,8 +171,7 @@ Future Work
 
 The original intent for this tuner was to be able to analyze
 notes being played from any audio source, as well as from a 
-MIDI device.  However, 
-Auduino - Chord Detection Algorithm Overview
+MIDI device.  However, after research and some testing, we found that the ideal algorithm for the job, a Fast Hartley Transform, would be too costly to run on the hardware we had available. Further, given the sampling rate limitations of the Arduino Uno, we would need to significantly reduce our sampling range (< 4kHz) such that many frequencies for our target instruments (guitar, piano) would not be perceivable. If this project continues, we'll investigate the possiblity of dedicated FHT hardware that could be combined with our existing MIDI rig. 
 
 
 
