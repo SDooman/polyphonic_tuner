@@ -57,7 +57,15 @@ const int minMaj7Maskp4 = 2185 + 32; // C minor major 7th mask
 const int majMin7Maskp4 = 1169 + 32; // C dominant seventh as mask
 const int majMaj7Maskp4 = 2193 + 32; // C majorMinor mask
 
-void array_to_chord(){
+/*
+ * Converts the notes array into an int which represents which of 12 notes in
+ * the major scale are being played. Arduino ints are 16 bits, but we
+ * only use the last 12. Note that we eliminate octave information.
+ * 
+ * If some notes are currently on, we will call the detectChord method, which
+ * will identify the chord and print a description.
+ */
+void array_to_chord() {
   int result = 0;
   for(int i = 0; i < MIDI_NOTES; i++){
     if(notes[i]){
@@ -65,12 +73,18 @@ void array_to_chord(){
     }
   }
   
-  if(result){
+  if (result) { //if any notes are being played
     detectChord(result);
   }
   
 }
 
+/*
+ * Detects which chord is currently being played.
+ * It expects a 12-bit int which represents the chord. It checks the chord 
+ * agains each mask and if it gets a match it displays the root and quality.
+ * If not, it rotates the chord and tries again.
+ */
 void detectChord(int chord){
   int root;
   for (root = 0; root < 12; root++){ // only 12 possible rotations
