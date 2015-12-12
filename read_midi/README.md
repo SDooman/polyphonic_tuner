@@ -27,7 +27,7 @@ to update the internal representation of the currently played
 notes, and analyzes the current notes.  Then the display is 
 updated in an LCD update task.
 
-![Task Diagram](http://imgur.com/Q5uCQFN)
+![Task Diagram](http://i.imgur.com/Q5uCQFN.png?1)
 
 Implementation
 ==============
