@@ -10,7 +10,11 @@ will identify the root and quality of the chord and display it.
 This device is designed for new musicians, particularly new 
 pianists or guitarists.  This device will enable musicians to 
 see exactly what they're playing and help develop their 
-ear training.
+ear training. As developing musicians, we chose to pursue this
+project as this tool would be useful to us in our daily practice,
+and we expect it would be useful for other musicians that are
+confident in their technical skills, but aren't as strong
+with their theory. 
 
 Architecture
 ============
