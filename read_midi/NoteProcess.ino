@@ -60,11 +60,15 @@ void array_to_chord() {
     }
   }
   
-  analyzeNotes(result);
+  analyze(result);
 }
 
-
-void analyzeNotes(int chord) {
+/*
+ * Attempts to analyze a chord and if it cannot not, defers to displayNotes
+ * which prints the individual notes being played.
+ *
+ */
+void analyze(int chord) {
     detectChord(chord);
 
     if (!makesChord) {
@@ -72,6 +76,19 @@ void analyzeNotes(int chord) {
     }
 }
 
+/*
+ * Displays individual notes in the chord by cycling through it and consulting
+ * the intToLetterPrefix array. Note names are put into message, and
+ * any sharps are displayed in submessage.
+ *
+ * The message/submessage variables are the interface with the lcd display.
+ * 
+ *              ________________
+ *  message    |C  D            |
+ *             +----------------+
+ *  submessage |   #            |
+ *             ------------------
+ */ 
 void displayNotes(int chord) {
   //No triadic chord was found so print notes being played
   for (int root = 0; root < 12; root++) {

@@ -1,19 +1,16 @@
 #include <MIDI.h>
-#include <midi_Defs.h>
-#include <midi_Message.h>
-#include <midi_Namespace.h>
-#include <midi_Settings.h>
-
 #include <LiquidCrystal.h>
+
+
+// Initialize libraries
 LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
-#include <MIDI.h>
 MIDI_CREATE_DEFAULT_INSTANCE();
 
-String message = "";
-String subMessage = "";
+String message = ""; // The interface with the LCD display - top row.
+String subMessage = ""; // The interface with the LCD display - bottom row
 
-boolean makesChord = false; //For determining if chord is triad
-boolean wasChanged = false;
+boolean makesChord = false; // For determining if chord is triad
+boolean wasChanged = false; // If we have received a noteOn or noteOff command recently.
 
 const int MIDI_NOTES = 127;
 boolean notes[MIDI_NOTES];
@@ -62,6 +59,14 @@ void setNote(byte note, boolean status) {
   wasChanged = true;
 }
 
+/*
+ * Displays the message and submessage in the LCD display.
+ *              ________________
+ *  message    |C  D            |
+ *             +----------------+
+ *  submessage |   #            |
+ *             ------------------
+ */
 void display() {
   lcd.clear();
   lcd.print(message);
