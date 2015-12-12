@@ -43,3 +43,30 @@ In particular, some devices will send a Note On command when notes
 finish playing, but with a velocity of 0 to signify the note 
 finished.
 
+Evaluation
+==========
+
+This device will correctly display the notes being played for 
+MIDI compliant devices, and can analyze chords with 4 or fewer
+notes.  It also can identify chords with 5 notes, but some of 
+these chords can be interpreted in multiple ways, so the 
+algorithm will arbitrarily choose a matching identification.
+
+The display of the current notes has no perceivable delays.
+
+Related Work
+============
+
+The chord identification functionality appears in several
+professional DAWs.  After significant testing on chords that
+this tuner is capable of analyzing, we determined the accuracy
+of our device to be consistent with Logic Pro.  However,
+there is no stand-alone device that offers this functionality,
+and these DAWs cost on the order of hundreds of dollars.
+
+Future Work
+===========
+
+The original intent for this tuner was to be able to analyze
+notes being played from any audio source, as well as from a 
+MIDI device.  However, 
