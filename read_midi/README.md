@@ -24,4 +24,22 @@ updated in an LCD update task.
 Implementation
 ==============
 
+Below is the parts list required for this tuner:
+ * MIDI connector Digikey CP-2350-ND
+ * 220Ohm 1/4watt resistor Digikey CF14JT220RCT-ND
+ * 1N4148 diode Digikey1N4148-TAPCT-ND
+ * 10kOhm 1/4watt resistor Digikey CF14JT10K0CT-ND
+ * 470 Ohm 1/4watt resistor Digikey CF14JT470RCT-ND
+ * 6N138 optocoupler Digikey 751-1263-5-ND
+ * MIDI Cable
+ * Parallex 2x16 LCD Screen
+ * Arduino Uno
+
+When implementing the hardware component of this project,
+one of the challenges faced was figuring out how to interpret
+MIDI events from the MIDI device.  While the MIDI protocol is
+universal, some devices handle when notes finish playing differently.
+In particular, some devices will send a Note On command when notes
+finish playing, but with a velocity of 0 to signify the note 
+finished.
 
