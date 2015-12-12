@@ -37,7 +37,7 @@ Below is the parts list required for this tuner:
  * Parallex 2x16 LCD Screen
  * Arduino Uno
 
-When implementing the hardware component of this project,
+When implementing the software component of this project,
 one of the challenges faced was figuring out how to interpret
 MIDI events from the MIDI device.  While the MIDI protocol is
 universal, some devices handle when notes finish playing differently.
@@ -162,7 +162,7 @@ Related Work
 ============
 
 The chord identification functionality appears in several
-professional DAWs.  After significant testing on chords that
+professional Digital Audio Workstations (DAWs).  After significant testing on chords that
 this tuner is capable of analyzing, we determined the accuracy
 of our device to be consistent with Logic Pro.  However,
 there is no stand-alone device that offers this functionality,
