@@ -1,3 +1,5 @@
+TEAM: skortchm, sdooman, ndemarco
+
 Polyphonic Tuner
 ================
 
