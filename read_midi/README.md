@@ -1,3 +1,5 @@
+TEAM: skortchm, sdooman, ndemarco
+
 Polyphonic Tuner
 ================
 
@@ -8,7 +10,11 @@ will identify the root and quality of the chord and display it.
 This device is designed for new musicians, particularly new 
 pianists or guitarists.  This device will enable musicians to 
 see exactly what they're playing and help develop their 
-ear training.
+ear training. As developing musicians, we chose to pursue this
+project as this tool would be useful to us in our daily practice,
+and we expect it would be useful for other musicians that are
+confident in their technical skills, but aren't as strong
+with their theory. 
 
 Architecture
 ============
@@ -20,6 +26,8 @@ Note On or Note Off.  For either of those, a task is executed
 to update the internal representation of the currently played
 notes, and analyzes the current notes.  Then the display is 
 updated in an LCD update task.
+
+![Task Diagram](http://i.imgur.com/Q5uCQFN.png?1)
 
 Implementation
 ==============
@@ -35,7 +43,7 @@ Below is the parts list required for this tuner:
  * Parallex 2x16 LCD Screen
  * Arduino Uno
 
-When implementing the hardware component of this project,
+When implementing the software component of this project,
 one of the challenges faced was figuring out how to interpret
 MIDI events from the MIDI device.  While the MIDI protocol is
 universal, some devices handle when notes finish playing differently.
@@ -160,7 +168,7 @@ Related Work
 ============
 
 The chord identification functionality appears in several
-professional DAWs.  After significant testing on chords that
+professional Digital Audio Workstations (DAWs).  After significant testing on chords that
 this tuner is capable of analyzing, we determined the accuracy
 of our device to be consistent with Logic Pro.  However,
 there is no stand-alone device that offers this functionality,
