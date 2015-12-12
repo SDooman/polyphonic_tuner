@@ -2,19 +2,6 @@ String intToLetter[12] = {"C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", 
 String intToLetterPrefix[12] = {"C", "C", "D", "D", "E", "F", "F", "G", "G", "A", "A", "B"};
 boolean intToLetterIsBlackKey[12] = {false, true, false, true, false, false, true, false, true, false, true, false};
 
-#define CBIT 145
-#define CsBIT 290
-#define DBIT 580
-#define DsBIT 1160
-#define EBIT 2192
-#define FBIT 545
-#define FsBIT 1090
-#define GBIT 2180
-#define GsBIT 265
-#define ABIT 529
-#define AsBIT 1058
-#define BBIT 2120
-
 const int majMask = 145; // C Major Triad as mask
 const int minMask = 137;  // C Minor Triad as mask
 const int dimMask = 73; // C Diminished Triad as mask
@@ -53,13 +40,19 @@ const int minMaskp4 = 137 + 32;  // C Minor Triad as mask
 const int dimMaskp4 = 73 + 32; // C Diminished Triad as mask
 const int augMaskp4 = 273 + 32; // C Augmented Triad as mask
 const int minMin7Maskp4 = 1161 + 32; // C minor minor 7th mask
-//const int halfDim7Maskp4 = 1097 + 32; // C half diminished 7th mask
-//const int fullDim7Maskp4 = 585 + 32; // C fully diminished 7th mask
 const int minMaj7Maskp4 = 2185 + 32; // C minor major 7th mask
 const int majMin7Maskp4 = 1169 + 32; // C dominant seventh as mask
 const int majMaj7Maskp4 = 2193 + 32; // C majorMinor mask
 
-void array_to_chord(){
+/*
+ * Converts the notes array into an int which represents which of 12 notes in
+ * the major scale are being played. Arduino ints are 16 bits, but we
+ * only use the last 12. Note that we eliminate octave information.
+ * 
+ * If some notes are currently on, we will call the detectChord method, which
+ * will identify the chord and print a description.
+ */
+void array_to_chord() {
   int result = 0;
   for(int i = 0; i < MIDI_NOTES; i++){
     if(notes[i]){
@@ -67,78 +60,98 @@ void array_to_chord(){
     }
   }
   
-  if(result){
-    detectChord(result);
-  }
-  
+  analyzeNotes(result);
 }
 
-void detectChord(int notes){
-  int root;
-  message.remove(0);
-  subMessage.remove(0);
-  
-  for (root = 0; root < 12; root++){ // only 12 possible rotations
-    switch (notes) {
+
+void analyzeNotes(int chord) {
+    detectChord(chord);
+
+    if (!makesChord) {
+      displayNotes(chord);
+    }
+}
+
+void displayNotes(int chord) {
+  //No triadic chord was found so print notes being played
+  for (int root = 0; root < 12; root++) {
+    //if current first bit is on, turn it on in message
+    if ((chord >> root) & 1) {
+      message += intToLetterPrefix[root];
+      if (intToLetterIsBlackKey[root]) {
+        subMessage += "#";
+      } else {
+        subMessage += " ";
+      }
+    } else {
+      message += " ";
+      subMessage += " ";
+    }
+  }
+}
+
+/*
+ * Detects which chord is currently being played.
+ * It expects a 12-bit int which represents the chord. It checks the chord 
+ * agains each mask and if it gets a match it displays the root and quality.
+ * If not, it rotates the chord and tries again.
+ */
+void detectChord(int chord) {
+  message = "";
+  subMessage="";
+
+  makesChord = true;
+  for (int root = 0; root < 12; root++) { // only 12 possible rotations
+    switch (chord) {
         
       case majMask:
         message = intToLetter[root];
         message += " Major";
-        makesChord = true;
         return;
       
       case minMask:
         message = intToLetter[root];
         message += " Minor";
-        makesChord = true;
         return;
 
       case augMask:
         message = intToLetter[root];
         message += " Aug";
-        makesChord = true;
         return;
 
       case dimMask:
         message = intToLetter[root];
         message += " Dim";
-        makesChord = true;
         return;
 
       case minMin7Mask:
         message = intToLetter[root];
         message += " Min Min 7";
-        makesChord = true;
         return;
 
       case halfDim7Mask:
         message = intToLetter[root];
         message += " Half Dim 7";
-        makesChord = true;
         return;
 
       case fullDim7Mask:
         message = intToLetter[root];
         message += " Full Dim 7";
-        makesChord = true;
         return;
 
       case majMin7Mask:
         message = intToLetter[root];
         message += " Maj Min 7";
-        makesChord = true;
         return;
         
       case majMaj7Mask:
         message = intToLetter[root];
         message += " Maj Maj 7";
-        makesChord = true;
         return;
 
       case minMaj7Mask:
         message = intToLetter[root];
         message += " Min Maj 7";
-        makesChord = true;
         return;
 
       /**************/
@@ -146,49 +159,41 @@ void detectChord(int notes){
       case majMaskpb2:
         message = intToLetter[root];
         message += " Major + b2";
-        makesChord = true;
         return;
       
       case minMaskpb2:
         message = intToLetter[root];
         message += " Minor + b2";
-        makesChord = true;
         return;
 
       case augMaskpb2:
         message = intToLetter[root];
         message += " Aug + b2";
-        makesChord = true;
         return;
 
       case dimMaskpb2:
         message = intToLetter[root];
         message += " Dim + b2";
-        makesChord = true;
         return;
 
       case minMin7Maskpb9:
         message = intToLetter[root];
         message += " Min Min 7 b9";
-        makesChord = true;
         return;
 
       case halfDim7Maskpb9:
         message = intToLetter[root];
         message += " Half Dim 7 b9";
-        makesChord = true;
         return;
 
       case fullDim7Maskpb9:
         message = intToLetter[root];
         message += " Full Dim 7 b9";
-        makesChord = true;
         return;
 
       case majMin7Maskpb9:
         message = intToLetter[root];
         message += " Maj Min 7 b9";
-        makesChord = true;
         return;
         
       case majMaj7Maskpb9:
@@ -199,7 +204,6 @@ void detectChord(int notes){
       case minMaj7Maskpb9:
         message = intToLetter[root];
         message += " Min Maj 7 b9";
-        makesChord = true;
         return;
 
       /************/
@@ -207,61 +211,51 @@ void detectChord(int notes){
       case majMaskp2:
         message = intToLetter[root];
         message += " Major + 2";
-        makesChord = true;
         return;
       
       case minMaskp2:
         message = intToLetter[root];
         message += " Minor + 2";
-        makesChord = true;
         return;
 
       case augMaskp2:
         message = intToLetter[root];
         message += " Aug + 2";
-        makesChord = true;
         return;
 
       case dimMaskp2:
         message = intToLetter[root];
         message += " Dim + 2";
-        makesChord = true;
         return;
 
       case minMin7Maskp9:
         message = intToLetter[root];
         message += " Min Min 7 + 9";
-        makesChord = true;
         return;
 
       case halfDim7Maskp9:
         message = intToLetter[root];
         message += " Half Dim 7 + 9";
-        makesChord = true;
         return;
 
       case fullDim7Maskp9:
         message = intToLetter[root];
         message += " Full Dim 7 +9";
-        makesChord = true;
         return;
 
       case majMin7Maskp9:
         message = intToLetter[root];
         message += " Maj Min 7 + 9";
-        makesChord = true;
         return;
         
       case majMaj7Maskp9:
         message = intToLetter[root];
         message += " Maj Maj 7 + 9";
-        makesChord = true;
         return;
 
       case minMaj7Maskp9:
         message = intToLetter[root];
         message += " Min Maj 7 + 9";
-        makesChord = true;
         return;
 
       /************/
@@ -269,97 +263,53 @@ void detectChord(int notes){
       case majMaskp4:
         message = intToLetter[root];
         message += " Major + 4";
-        makesChord = true;
         return;
       
       case minMaskp4:
         message = intToLetter[root];
         message += " Minor + 4";
-        makesChord = true;
         return;
 
       case augMaskp4:
         message = intToLetter[root];
         message += " Aug + 4";
-        makesChord = true;
         return;
 
       case dimMaskp4:
         message = intToLetter[root];
         message += " Dim + 4";
-        makesChord = true;
         return;
 
       case minMin7Maskp4:
         message = intToLetter[root];
         message += " Min Min 7 + 4";
-        makesChord = true;
-        return;
-
-      /*
-      case halfDim7Mask:
-        message = intToLetter[root];
-        message += " Half Dim 7";
-        makesChord = true;
         return;
         
-      case fullDim7Mask:
-        message = intToLetter[root];
-        message += " Full Dim 7";
-        return;
-      */
       case majMin7Maskp4:
         message = intToLetter[root];
         message += " Maj Min 7 + 4";
-        makesChord = true;
         return;
         
       case majMaj7Maskp4:
         message = intToLetter[root];
         message += " Maj Maj 7 + 4";
-        makesChord = true;
         return;
 
       case minMaj7Maskp4:
         message = intToLetter[root];
         message += " Min Maj 7 + 4";
-        makesChord = true;
         return;
 
       default:                        // no masks matched
 
-        if (1 & notes){               // first bit is on, need to rotate it.
-          notes = (notes >> 1) | 2048;// turn on last bit
+        if (1 & chord){               // first bit is on, need to rotate it.
+          chord = (chord >> 1) | 2048;// turn on last bit
         } else {
-          notes = notes >> 1;         // otherwise just shift
+          chord = chord >> 1;         // otherwise just shift
         }
         break;
     }
   }
 
-  //No triadic chord was found so print notes being played
-
   makesChord = false;
-  
-  for(root = 0; root < 12; root++) {
-    //if current first bit is on, turn it on in message
-    if(1 & notes){
-      message += intToLetterPrefix[root];
-      if(intToLetterIsBlackKey[root]) {
-        subMessage += "#";
-      } else {
-        subMessage += " ";
-      }
-    } else {
-      message += " ";
-      subMessage += " ";
-    }
-    
-    //Rotate to determine whether next note is being played
-    if (1 & notes){               // first bit is on, need to rotate it.
-      notes = (notes >> 1) | 2048;// turn on last bit
-    } else {
-      notes = notes >> 1;         // otherwise just shift
-    }
-  }
 }
